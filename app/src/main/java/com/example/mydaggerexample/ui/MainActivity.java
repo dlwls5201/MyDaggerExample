@@ -6,14 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import com.example.mydaggerexample.burger.Burger;
 import com.example.mydaggerexample.R;
-import com.example.mydaggerexample.di.BurgerComponent;
-import com.example.mydaggerexample.di.BurgerModule;
-import com.example.mydaggerexample.di.DaggerBurgerComponent;
+import com.example.mydaggerexample.burger.Burger;
+import dagger.android.support.DaggerAppCompatActivity;
+
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DaggerAppCompatActivity {
 
     @Inject
     Burger burger;
@@ -24,13 +23,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("MainActivity");
 
-        BurgerComponent component = DaggerBurgerComponent.builder()
-                .burgerModule(new BurgerModule())
-                .build();
+        // DaggerBurgerComponent 함수는 필요 없습니다.
+        /* DaggerBurgerComponent.builder().build()
+                .inject(this);*/
 
-        component.inject(this);
-
-        Log.d("MyTag","MainActivity burger bun : " + burger.bun.getBun() + " , patty : " + burger.patty.getPatty());
+        Log.d("MyTag","MainActivity burger bun : "
+                + burger.bun.getBun() + " , patty : " + burger.patty.getPatty());
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }
 

@@ -2,17 +2,14 @@ package com.example.mydaggerexample.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import com.example.mydaggerexample.burger.Burger;
 import com.example.mydaggerexample.R;
-import com.example.mydaggerexample.di.BurgerComponent;
-import com.example.mydaggerexample.di.BurgerModule;
-import com.example.mydaggerexample.di.DaggerBurgerComponent;
+import com.example.mydaggerexample.burger.Burger;
+import dagger.android.support.DaggerAppCompatActivity;
 
 import javax.inject.Inject;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends DaggerAppCompatActivity {
 
     @Inject
     Burger burger;
@@ -23,13 +20,12 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("DetailActivity");
 
-        BurgerComponent component = DaggerBurgerComponent.builder()
-                .burgerModule(new BurgerModule())
-                .build();
+        // DaggerBurgerComponent 함수는 필요 없습니다.
+        /* DaggerBurgerComponent.builder()
+                .build().inject(this);*/
 
-        component.inject(this);
-
-        Log.d("MyTag","DetailActivity burger bun : " + burger.bun.getBun() + " , patty : " + burger.patty.getPatty());
+        Log.d("MyTag","DetailActivity burger bun : "
+                + burger.bun.getBun() + " , patty : " + burger.patty.getPatty());
 
     }
 }
